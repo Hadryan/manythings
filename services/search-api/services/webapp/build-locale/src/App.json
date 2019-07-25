@@ -1,0 +1,10 @@
+[
+  {
+    "id": "app.subtitle",
+    "defaultMessage": "Go to `react-ssr` documentation"
+  },
+  {
+    "id": "app.description",
+    "defaultMessage": "Edit <code>src/App.js</code> and save to reload."
+  }
+]

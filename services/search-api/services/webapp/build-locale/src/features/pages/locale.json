@@ -1,0 +1,26 @@
+[
+  {
+    "id": "pages.lang.en",
+    "defaultMessage": "Leggi i contenuti in lingua Italiana"
+  },
+  {
+    "id": "pages.lang.it",
+    "defaultMessage": "Read the English contents"
+  },
+  {
+    "id": "pages.listTitle",
+    "defaultMessage": "Available Features"
+  },
+  {
+    "id": "pages.goToHome",
+    "defaultMessage": "&laquo; Go to Home Page"
+  },
+  {
+    "id": "pages.goToMenu",
+    "defaultMessage": "&laquo; Go to the menu"
+  },
+  {
+    "id": "pages.notFound",
+    "defaultMessage": "404 - Page not found"
+  }
+]

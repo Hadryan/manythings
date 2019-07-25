@@ -1,0 +1,10 @@
+[
+  {
+    "id": "locale.it",
+    "defaultMessage": "Italiano"
+  },
+  {
+    "id": "locale.en",
+    "defaultMessage": "English"
+  }
+]

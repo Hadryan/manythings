@@ -1,0 +1,12 @@
+version: '3.4'
+services:
+
+    redis:
+        image: redis:5.0.5
+        command: redis-server /usr/local/etc/redis/redis.conf
+        ports:
+            - ${REDIS_PORT-6379}:6379
+        volumes:
+            - ${HUMBLE_DATA}/redis:/var/lib/redis
+            - ./redis.conf:/usr/local/etc/redis/redis.conf
+        restart: always
