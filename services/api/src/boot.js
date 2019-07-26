@@ -56,6 +56,18 @@ registerAction({
             attemptDelay: Number(getEnv('PG_CONN_ATTEMPTS_DELAY', 5000)),
             models: [],
         }])
+
+        setConfig('firebase', {
+            appName: 'passenger',
+            projectId: getEnv('FIREBASE_PROJECT_ID'),
+            privateKeyId: getEnv('FIREBASE_PRIVATE_KEY_ID'),
+            privateKey: getEnv('FIREBASE_PRIVATE_KEY'),
+            clientEmail: getEnv('FIREBASE_CLIENT_EMAIL'),
+            clientId: getEnv('FIREBASE_CLIENT_ID'),
+            clientCertUrl: getEnv('FIREBASE_CLIENT_CERT_URL'),
+            databaseUrl: getEnv('FIREBASE_DATABASE_URL'),
+            storageBucket: getEnv('FIREBASE_STORAGE_BUCKET'),
+        })
     },
 })
 
@@ -98,6 +110,7 @@ export default createHookApp({
         require('@forrestjs/service-express-graphql-test'),
         require('@forrestjs/service-postgres'),
         require('./services/service-express-session'),
+        require('./services/service-firebase'),
     ],
     features: [
         require('./features/feature-pg-auth'),
