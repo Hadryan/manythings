@@ -9,6 +9,7 @@ SDK reference: https://firebase.google.com/docs/reference/admin
 import * as firebase from 'src/services/service-firebase/firebase.lib.js'
 firebase.getDocById('collection-name', 'user-id')
 firebase.getFileByKey('path/to/file')
+firebase.getAuthById('user-id')
 firebase.getClient() // do what ever action
 ```
 

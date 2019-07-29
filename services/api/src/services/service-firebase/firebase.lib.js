@@ -14,6 +14,13 @@ export const init = (_config) => {
     }, _config.name)
 }
 
+// https://firebase.google.com/docs/reference/admin/node/admin.auth.Auth.html
+export const getAuthById = (uuid) => new Promise((resolve, reject) => {
+    getClient().auth().getUser(uuid)
+        .then(data => resolve(data))
+        .catch(err => reject(err)) 
+})
+
 // https://googleapis.dev/nodejs/firestore/latest/CollectionReference.html
 export const getDocById = (collection, docId) => new Promise((resolve, reject) => {
     getClient().firestore().collection(collection).doc(docId).get()
