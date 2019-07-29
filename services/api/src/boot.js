@@ -114,7 +114,8 @@ export default createHookApp({
     ],
     features: [
         require('./features/feature-pg-auth'),
-        require('./features/feature-pg-settings')
+        require('./features/feature-pg-settings'),
+        require('./features/feature-pg-memcached'),
         // require('./features/feature-pg-session'),
         // require('./features/feature-pg-session-history'),
         // require('./features/feature-pg-session-info'),
