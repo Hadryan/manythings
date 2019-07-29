@@ -110,10 +110,11 @@ export default createHookApp({
         require('@forrestjs/service-express-graphql-test'),
         require('@forrestjs/service-postgres'),
         require('./services/service-express-session'),
-        require('./services/service-firebase'),
+        // require('./services/service-firebase'),
     ],
     features: [
         require('./features/feature-pg-auth'),
+        require('./features/feature-pg-settings')
         // require('./features/feature-pg-session'),
         // require('./features/feature-pg-session-history'),
         // require('./features/feature-pg-session-info'),

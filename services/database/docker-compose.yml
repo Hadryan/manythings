@@ -7,9 +7,9 @@ services:
     ports:
         - 5432:5432
     environment:
-        POSTGRES_USER: passenger
-        POSTGRES_PASSWORD: passenger
-        POSTGRES_DB: passenger
+        POSTGRES_USER: postgres
+        POSTGRES_PASSWORD: postgres
+        POSTGRES_DB: postgres
     volumes:
         - ${HUMBLE_DATA}/pg:/var/lib/postgresql/data
         - ${HUMBLE_BACKUP}:/backup
