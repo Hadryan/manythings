@@ -2,7 +2,7 @@ import uuidValidate from 'uuid-validate'
 import Sequelize from 'sequelize'
 import { encode, compare } from '@forrestjs/service-hash'
 
-export const name = 'AuthAccount'
+export const name = 'Auth'
 
 const fields = {
     id: {
@@ -44,7 +44,7 @@ const fields = {
 }
 
 const options = {
-    tableName: 'auth_accounts',
+    tableName: 'auth',
     freezeTableName: true,
     underscored: true,
     hooks: {
@@ -103,7 +103,7 @@ const updateByRef = (conn, Model) => async (ref, values) => {
     })
 
     if (!res[0]) {
-        throw new Error(`[AuthAccount] ref "${ref}" now found`)
+        throw new Error(`[Auth] ref "${ref}" now found`)
     }
 
     return res[1][0]

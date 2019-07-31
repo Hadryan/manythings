@@ -1,6 +1,6 @@
 import { GraphQLNonNull, GraphQLString, GraphQLInt } from 'graphql'
 import GraphQLJSON from 'graphql-type-json'
-import { create } from '../../../auth-account.lib'
+import { create } from '../../../auth.lib'
 
 export const testCreateAccountMutation = () => ({
     description: 'Creates a brand new Auth account',

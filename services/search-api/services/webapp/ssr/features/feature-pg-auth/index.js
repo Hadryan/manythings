@@ -1,7 +1,7 @@
 // import Sequelize from 'sequelize'
 import { POSTGRES_BEFORE_START } from '@forrestjs/service-postgres/lib/hooks'
 import * as hooks from './hooks'
-import * as authAccountModel from './auth-account.model'
+import * as authModel from './auth.model'
 import { testCreateAccountMutation } from './graphql/mutations/test/create-account.mutation'
 import { loginMutation } from './graphql/mutations/login.mutation'
 import { logoutMutation } from './graphql/mutations/logout.mutation'
@@ -29,7 +29,7 @@ export default ({ registerHook, registerAction }) => {
         hook: `${POSTGRES_BEFORE_START}/searchapi`,
         name: hooks.FEATURE_NAME,
         handler: ({ registerModel }) => {
-            registerModel(authAccountModel)
+            registerModel(authModel)
         },
     })
 

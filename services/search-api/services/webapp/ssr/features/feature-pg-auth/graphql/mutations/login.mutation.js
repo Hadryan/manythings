@@ -2,7 +2,7 @@ import { GraphQLNonNull, GraphQLObjectType, GraphQLInt } from 'graphql'
 import { GraphQLString, GraphQLID } from 'graphql'
 import GraphQLJSON from 'graphql-type-json'
 import { GraphQLDateTime } from 'graphql-iso-date'
-import { login } from '../../auth-account.lib'
+import { login } from '../../auth.lib'
 
 export const loginMutation = () => ({
     description: 'Authenticates the current session',

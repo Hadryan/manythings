@@ -1,5 +1,5 @@
 import { GraphQLNonNull, GraphQLObjectType, GraphQLString } from 'graphql'
-import { logout } from '../../auth-account.lib'
+import { logout } from '../../auth.lib'
 
 export const logoutMutation = () => ({
     description: 'Clean the authentication information from the running session',
@@ -11,5 +11,5 @@ export const logoutMutation = () => ({
             },
         },
     })),
-    resolve: (_, args, { req, res }) => logout(req, res),
+    resolve: (_, args, { req, res }) => logout({}, req, res),
 })
