@@ -78,6 +78,7 @@
     "uuid-validate": "^0.0.3"
   },
   "devDependencies": {
-    "@forrestjs/package-universal-dev": "3.0.0"
+    "@forrestjs/package-universal-dev": "3.0.0",
+    "assert": "^2.0.0"
   }
 }

@@ -26,7 +26,12 @@ export const login = async ({ uname, passw }, req, res) => {
     await req.session.validate()
 
     // Decorate the session JWT with the identity informations.
-    const auth = { auth_id: record.id, auth_etag: record.etag }
+    const auth = {
+        auth_id: record.id,
+        auth_etag: record.etag,
+        auth_grants: record.payload.grants,
+    }
+
     await req.session.set(auth)
     await req.session.write(auth)
 
@@ -38,7 +43,7 @@ export const login = async ({ uname, passw }, req, res) => {
 }
 
 export const logout = async (req, res) => {
-    const auth = [ 'auth_id', 'auth_etag' ]
+    const auth = [ 'auth_id', 'auth_etag', 'auth_grants' ]
     await req.session.unset(auth)
     // await req.session.delete(auth)
     await req.session.create()
