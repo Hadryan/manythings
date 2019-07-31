@@ -47,8 +47,6 @@ registerAction({
 
         // setConfig('hash.rounds', getEnv('HASH_ROUNDS'))
 
-        setConfig('simple-encryptor.token', getEnv('ENCRYPTOR_TOKEN'))
-
         setConfig('postgres.connections', [{
             connectionName: 'searchapi',
             host: getEnv('PG_HOST'),
@@ -126,6 +124,7 @@ export default createHookApp({
         require('./features/feature-pg-auth'),
         require('./features/feature-pg-session'),
         require('./features/feature-pg-session-info'),
-        // require('./features/feature-pg-profile-search'),
+        require('./features/feature-pg-settings'),
+        require('./features/feature-pg-memcached'),
     ],
 })

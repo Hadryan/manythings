@@ -69,6 +69,7 @@
     "async": "^2.6.2",
     "chokidar": "^3.0.0",
     "es6-promise": "^4.2.6",
+    "flat": "^4.1.0",
     "front-matter": "^3.0.2",
     "glob": "^7.1.4",
     "graphql-iso-date": "^3.6.1",
