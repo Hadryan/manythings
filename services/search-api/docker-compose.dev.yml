@@ -11,8 +11,26 @@ services:
             POSTGRES_DB: ${PG_DATABASE:-postgres}
         volumes:
             - ${HUMBLE_DATA}/pg-dev:/var/lib/postgresql/data
-            - ${HUMBLE_BACKUP}:/backup
+            - ${HUMBLE_BACKUP}/pg-dev/backup:/backup
         restart: always
+
+    elasticsearch:
+        image: elasticsearch:7.2.0
+        ports:
+            - ${ELASTICSEARCH_PORT-9200}:9200
+        environment:
+            - discovery.type=single-node
+        volumes:
+            - ${HUMBLE_DATA}/elasticsearch:/usr/share/elasticsearch/data
+
+    # kibana:
+    #     image: kibana:7.2.0
+    #     ports:
+    #         - ${KIBANA_PORT-5601}:5601
+    #     environment:
+    #         ELASTICSEARCH_HOSTS: ${ELASTICSEARCH_HOST-http://elasticsearch:9200}
+    #     # volumes:
+    #     #     - ./kibana.yml:/usr/share/kibana/config/kibana.yml
 
     webapp:
         image: node:12.2-alpine

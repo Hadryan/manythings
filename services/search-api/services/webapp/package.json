@@ -65,6 +65,7 @@
     "not op_mini all"
   ],
   "dependencies": {
+    "@elastic/elasticsearch": "^7.2.0",
     "@forrestjs/package-universal": "3.0.7",
     "async": "^2.6.2",
     "chokidar": "^3.0.0",

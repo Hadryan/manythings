@@ -47,6 +47,8 @@ registerAction({
 
         // setConfig('hash.rounds', getEnv('HASH_ROUNDS'))
 
+        setConfig('elasticsearch.host', getEnv('ELASTICSEARCH_HOST'))
+
         setConfig('postgres.connections', [{
             connectionName: 'searchapi',
             host: getEnv('PG_HOST'),
@@ -116,6 +118,7 @@ export default createHookApp({
         require('@forrestjs/service-postgres-pubsub'),
         require('./services/service-express-session'),
         require('./services/service-express-device'),
+        require('./services/service-elasticsearch'),
         // require('@forrestjs/service-express-ssr'),
         // require('@forrestjs/feature-locale'),
     ],
