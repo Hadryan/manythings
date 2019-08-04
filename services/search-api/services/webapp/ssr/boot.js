@@ -47,7 +47,13 @@ registerAction({
 
         // setConfig('hash.rounds', getEnv('HASH_ROUNDS'))
 
-        setConfig('elasticsearch.host', getEnv('ELASTICSEARCH_HOST'))
+        setConfig('elasticsearch', {
+            clusters: ['wilder'],
+            'wilder': {
+                nodes: getEnv('ELASTICSEARCH_WILDER_NODES'),
+                indexes: getEnv('ELASTICSEARCH_WILDER_INDEXES'),
+            },
+        })
 
         setConfig('postgres.connections', [{
             connectionName: 'searchapi',

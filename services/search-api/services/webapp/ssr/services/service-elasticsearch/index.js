@@ -1,5 +1,5 @@
 
-import { Client } from '@elastic/elasticsearch'
+import { init, start, getClient } from './elasticsearch.lib'
 
 export default async ({ registerAction, getConfig }) => {
     registerAction({
@@ -7,41 +7,34 @@ export default async ({ registerAction, getConfig }) => {
         name: 'elasticsearch',
         trace: __filename,
         handler: async ({ getConfig }) => {
-            // const client = new Client({
-            //     node: getConfig('elasticsearch.host'),
-            //     maxRetries: 5,
-            //     requestTimeout: 60000,
-            //     sniffOnStart: true
-            // })
+            const clusters = getConfig('elasticsearch.clusters')
 
-            // console.log(getConfig('elasticsearch.host'))
-            // await client.index({
-            //     index: 'game-of-thrones',
-            //     body: {
-            //         character: 'Ned Stark',
-            //         quote: 'Winter is coming.'
-            //     }
-            // })
+            const config = clusters.reduce((acc, curr) => ({
+                ...acc,
+                [curr]: {
+                    nodes: getConfig(`elasticsearch.${curr}.nodes`, '').split(','),
+                    indexes: getConfig(`elasticsearch.${curr}.indexes`, []),
+                },
+            }), {})
 
-            // const { body } = await client.search({
-            //     index: 'game-of-thrones',
-            //     body: {
-            //         query: {
-            //             match: {
-            //                 quote: 'winter'
-            //             }
-            //         }
-            //     }
-            // })
+            init(config)
+        }
+    })
 
-            // console.log(body.hits.hits)
+    registerAction({
+        hook: '$START_SERVICE',
+        name: 'elasticsearch',
+        trace: __filename,
+        handler: async ({ getConfig, logger }) => {
+            const clusters = getConfig('elasticsearch.clusters')
 
-            // const { body } = await client.indices.getFieldMapping({
-            //     index: 'game-of-thrones',
-            //     fields: ['quote', 'character'],
-            // })
-
-            // console.log(body['game-of-thrones'].mappings.character.mapping.character)
+            await Promise.all(clusters.map(async cluster => {
+                await start(cluster)
+                await getClient(cluster).ping({}, err => {
+                    if (err) throw new Error(`[elasticsearch] '${cluster}' cluster is down!`)
+                    logger.info(`[elasticsearch] '${cluster}' cluster is available`)
+                })
+            }))
         }
     })
 }
