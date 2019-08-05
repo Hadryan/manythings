@@ -1,39 +1,38 @@
 
-import { init, start, getClient } from './elasticsearch.lib'
+import * as hooks from './hooks'
+import { init, connect, runQuery } from './els.lib'
 
-export default async ({ registerAction, getConfig }) => {
-    registerAction({
-        hook: '$INIT_SERVICE',
-        name: 'elasticsearch',
-        trace: __filename,
-        handler: async ({ getConfig }) => {
-            const clusters = getConfig('elasticsearch.clusters')
+// Applies default values to `elasticsearch` config object
+const buildConfig = ({ getConfig, setConfig }) => {
+    const clusters = Object.keys(getConfig('elasticsearch', {}))
+    const config = clusters.reduce((acc, curr) => ({
+        ...acc,
+        [curr]: {
+            nodes: getConfig(`elasticsearch.${curr}.nodes`, '').split(','),
+            indexes: getConfig(`elasticsearch.${curr}.indexes`, '').split(','),
+        },
+    }), {})
 
-            const config = clusters.reduce((acc, curr) => ({
-                ...acc,
-                [curr]: {
-                    nodes: getConfig(`elasticsearch.${curr}.nodes`, '').split(','),
-                    indexes: getConfig(`elasticsearch.${curr}.indexes`, []),
-                },
-            }), {})
+    setConfig('elasticsearch', config)
+    return config
+}
 
-            init(config)
-        }
-    })
-
+export default async ({ registerAction }) => {
     registerAction({
         hook: '$START_SERVICE',
-        name: 'elasticsearch',
+        name: hooks.SERVICE_NAME,
         trace: __filename,
-        handler: async ({ getConfig, logger }) => {
-            const clusters = getConfig('elasticsearch.clusters')
-
-            await Promise.all(clusters.map(async cluster => {
-                await start(cluster)
-                await getClient(cluster).ping({}, err => {
-                    if (err) throw new Error(`[elasticsearch] '${cluster}' cluster is down!`)
-                    logger.info(`[elasticsearch] '${cluster}' cluster is available`)
-                })
+        handler: async ({ logger }, ctx) => {
+            const config = buildConfig(ctx)
+            await Promise.all(Object.keys(config).map(async clusterName => {
+                await connect({ clusterName, config }, ctx)
+                // ping cluster api
+                try {
+                    await runQuery({ clusterName, method: 'ping' })
+                    logger.info(`[elasticsearch] '${clusterName}' cluster is available :)`)
+                } catch (err) {
+                    throw new Error(`[elasticsearch] '${clusterName}' cluster is down!`)
+                }
             }))
         }
     })

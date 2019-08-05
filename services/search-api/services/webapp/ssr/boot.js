@@ -48,10 +48,9 @@ registerAction({
         // setConfig('hash.rounds', getEnv('HASH_ROUNDS'))
 
         setConfig('elasticsearch', {
-            clusters: ['wilder'],
-            'wilder': {
-                nodes: getEnv('ELASTICSEARCH_WILDER_NODES'),
-                indexes: getEnv('ELASTICSEARCH_WILDER_INDEXES'),
+            'cerberus': {
+                nodes: getEnv('ELS_CERBERUS_NODES'),
+                indexes: getEnv('ELS_CERBERUS_INDEXES'),
             },
         })
 

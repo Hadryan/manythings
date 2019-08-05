@@ -23,14 +23,14 @@ services:
         volumes:
             - ${HUMBLE_DATA}/elasticsearch:/usr/share/elasticsearch/data
 
-    # kibana:
-    #     image: kibana:7.2.0
-    #     ports:
-    #         - ${KIBANA_PORT-5601}:5601
-    #     environment:
-    #         ELASTICSEARCH_HOSTS: ${ELASTICSEARCH_HOST-http://elasticsearch:9200}
-    #     # volumes:
-    #     #     - ./kibana.yml:/usr/share/kibana/config/kibana.yml
+    kibana:
+        image: kibana:7.2.0
+        ports:
+            - ${KIBANA_PORT-5601}:5601
+        environment:
+            ELASTICSEARCH_HOSTS: ${ELASTICSEARCH_HOST-http://elasticsearch:9200}
+        # volumes:
+        #     - ./kibana.yml:/usr/share/kibana/config/kibana.yml
 
     webapp:
         image: node:12.2-alpine
