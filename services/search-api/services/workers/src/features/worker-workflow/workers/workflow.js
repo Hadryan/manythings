@@ -31,7 +31,7 @@ export default (ctx) => ({
                 action: 'drop',
                 payload: {
                     ...doc.payload,
-                    response: res.body,
+                    res,
                 }
             }
         }
@@ -46,7 +46,7 @@ export default (ctx) => ({
                 action: 'drop',
                 payload: {
                     ...doc.payload,
-                    response: res.body,
+                    res,
                 }
             }
         }
