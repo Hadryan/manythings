@@ -9,7 +9,7 @@ import { exec, execRaw } from 'src/services/service-api/api.lib'
 
 const resolvers = {}
 
-export default (ctx) => ({
+export default ({}) => ({
     queue: 'workflow',
     version: 0,
     sleep: 1000 * 60,
