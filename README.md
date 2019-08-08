@@ -23,16 +23,16 @@ Run mongo:
     
     make dev-mongo
     
-Run api:
+Run webapp:
 
-    make dev-api
-    
-## Run app in PROD
-    
-    make prod-api-docker
+    make dev-webapp
+
+Run workers:
+
+    make dev-workers
 
 ## Requirements
 
-Create your enviroment variables in `.env.local` files. They are needed to run the app.
+Create your enviroment variables in `.env.local` files. They are needed to run the project.
 
 You will find examples in `*.env` files

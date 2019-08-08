@@ -9,16 +9,16 @@ function help() {
 
 IMAGE_NAME=""
 IMAGE_PATH=""
+VERSION="latest"
+SERVICE="manythings-webapp"
+
 
 # Compose local properties with flag options
 while [ "$#" -ne 0 ] ; do
     case "$1" in
         deploy)
-            shift
-            ;;
-        api)
-            IMAGE_NAME="alialfredji/api-build:${2:-"latest"}"
-            IMAGE_PATH="./services/api/"
+            IMAGE_NAME="${DOCKER_USERNAME}/${2:-$SERVICE}:${3:-$VERSION}"
+            IMAGE_PATH="./services/webapp"
             
             echo ""
             echo "Image to deploy: ${IMAGE_NAME} ?"
