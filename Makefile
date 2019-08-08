@@ -54,9 +54,10 @@ dev-redis:
 # Reset
 #
 reset-all:
+	pkill -a node
 	humble do cleanup containers
 	rm -rf data
 	rm -rf node_modules
-	cd ./services/webapp && make clean-all
-	cd ./services/workers && make clean-all
+	cd ./services/webapp && make reset
+	cd ./services/workers && make reset
 	

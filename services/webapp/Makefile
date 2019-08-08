@@ -7,5 +7,5 @@ prod:
 	yarn install
 	yarn start:prod
 
-clean-all:
+reset:
 	yarn reset
