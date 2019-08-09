@@ -7,14 +7,11 @@
 #
 */
 
-var boot
 if (process.env.NODE_ENV === 'production') {
     require('@babel/polyfill');
-    boot = require('./build/src/boot').default()
 } else {
     require('@babel/polyfill');
     require('@babel/register');
-    boot = require('./src/boot').default()
 }
 
 /*
@@ -23,7 +20,7 @@ if (process.env.NODE_ENV === 'production') {
 #
 */
 
-boot.catch(function (err) {
+require('./src/boot').default().catch(function (err) {
     console.log('*** BOOT: Fatal Error');
     console.log(err);
 });
