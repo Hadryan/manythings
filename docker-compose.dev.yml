@@ -31,6 +31,7 @@ services:
         #       hard: -1
         volumes:
             - ${HUMBLE_DATA}/elasticsearch:/usr/share/elasticsearch/data
+        restart: always
 
     kibana:
         image: kibana:7.2.0
@@ -40,6 +41,7 @@ services:
             ELASTICSEARCH_HOSTS: ${ELASTICSEARCH_HOST:-http://elasticsearch:9200}
         # volumes:
         #     - ./kibana.yml:/usr/share/kibana/config/kibana.yml
+        restart: always
 
     mongo:
         image: mongo:3.4
@@ -65,10 +67,11 @@ services:
             GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_ADMIN_PASSWORD:-admin}
         volumes:
             - ${HUMBLE_DATA}/grafana:/var/lib/grafana
+        restart: always
 
     redis:
         image: redis:5.0.5
-        command: redis-server /usr/local/etc/redis/redis.conf
+        command: redis-server --requirepass ${REDIS_PASSWORD:-admin}
         ports:
             - ${REDIS_PORT-6379}:6379
         volumes:
@@ -76,31 +79,3 @@ services:
             - ./redis.conf:/usr/local/etc/redis/redis.conf
         restart: always
 
-    webapp:
-        image: node:12.2-alpine
-        # ports:
-        #     - ${WEBAPP_API_PORT:-8080}:8080
-        #     - ${WEBAPP_CRA_PORT:-3000}:3000
-        # volumes:
-        #     # - ${HUMBLE_DATA}/webapp/node_modules:/usr/src/app/node_modules:cached
-        #     # - ${HUMBLE_DATA}/webapp/node_build:/usr/src/app/node_build:cached
-        #     - ./services/webapp/package.json:/usr/src/app/package.json:delegated
-        #     - ./services/webapp/yarn.lock:/usr/src/app/yarn.lock:delegated
-        #     - ./services/webapp/jsconfig.json:/usr/src/app/jsconfig.json:delegated
-        #     - ./services/webapp/src:/usr/src/app/src:delegated
-        #     - ./services/webapp/ssr:/usr/src/app/ssr:delegated
-        #     - ./services/webapp/public:/usr/src/app/public:delegated
-        #     - ./services/webapp/index.js:/usr/src/app/index.js:delegated
-        #     - ./services/webapp/.env:/usr/src/app/.env:delegated
-        # environment:
-        #     NODE_ENV: development
-        #     PG_HOST: ${PG_HOST:-postgres}
-        #     PG_PORT: ${PG_PORT:-5432}
-        #     PG_USERNAME: ${PG_USERNAME:-postgres}
-        #     PG_PASSWORD: ${PG_PASSWORD:-postgres}
-        #     PG_DATABASE: ${PG_DATABASE:-postgres}
-        #     JWT_SECRET: ${JWT_SECRET:-grapi}
-        #     JWT_DURATION: ${JWT_DURATION:-1y}
-        #     BCRYPT_ROUNDS: ${BCRYPT_ROUNDS:-5}
-        # working_dir: /usr/src/app
-        # entrypoint: [ "yarn", "start:dev" ]

@@ -1,7 +1,12 @@
 import * as hooks from './hooks'
 import { init, start } from './fetchq.lib'
 
-const KNOWN_QUEUES = ['workflow']
+export {
+    upsert,
+    push,
+    append,
+    pushMany,
+} from './fetchq-doc.lib'
 
 // Applies default values to `fetchq` config object
 const buildConfig = ({ getConfig, setConfig }) => {
@@ -14,7 +19,7 @@ const buildConfig = ({ getConfig, setConfig }) => {
             limit: 3,
             sleep: 1500,
         }),
-        queues: getConfig('fetchq.queues', KNOWN_QUEUES),
+        queues: getConfig('fetchq.queues', []),
     }
 
     setConfig('fetchq', config)
@@ -35,7 +40,21 @@ export default ({ registerHook, registerAction }) => {
         hook: '$INIT_SERVICE',
         handler: async ({}, ctx) => {
             const config = buildConfig(ctx)
-            await init(config)
+            
+            await ctx.createHook.serie(hooks.FETCHQ_INIT, {
+                registerWorker: (workerPath) => (
+                    Array.isArray(workerPath)
+                        ? workerPath.forEach(path => config.workers.push(path))
+                        : config.workers.push(workerPath)
+                ),
+                registerQueue: (queueName) => (
+                    Array.isArray(queueName)
+                        ? queueName.forEach(name => config.queues.push(name))
+                        : config.queues.push(queueName)
+                ),
+            })
+            
+            await init(config, ctx)
         },
     })
 
@@ -44,7 +63,15 @@ export default ({ registerHook, registerAction }) => {
         hook: '$START_SERVICE',
         handler: async ({}, ctx) => {
             const config = buildConfig(ctx)
-            await start(config)
+            await start(config, ctx)
+        },
+    })
+
+    registerAction({
+        ...defaults,
+        hook: '$FETCHQ_INIT',
+        handler: async ({ registerQueue }, ctx) => {
+            registerQueue('workflow')
         },
     })
 }

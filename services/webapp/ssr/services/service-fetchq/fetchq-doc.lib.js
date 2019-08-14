@@ -52,7 +52,6 @@ export const pushMany = ({ queue, settings }) => {
 }
 
 
-// @TODO: even if we add "settings.throttle", it should return a promise!
 export const upsert = ({ queue, settings }) => {
     const { delay, ...other } = settings
 
