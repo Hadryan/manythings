@@ -26,9 +26,9 @@ dev-mongo:
 
 dev-elastic:
 	humble stop elasticsearch
-	humble rm -rf elasticsearch
+	humble rm -f elasticsearch
 	humble stop kibana
-	humble rm -rf kibana
+	humble rm -f kibana
 	humble up -d elasticsearch
 	humble up -d kibana
 	humble logs -f elasticsearch
