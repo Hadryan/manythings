@@ -4,9 +4,13 @@ import georedis from 'georedis'
 
 import * as hooks from './hooks'
 
-import * as geoService from './redis-geo.lib'
-
-// export { default as georedis } from './redis-geo.lib'
+export {
+    get as getGeos,
+    getNearby as getNearbyGeos,
+    create as createGeos,
+    update as updateGeos,
+    remove as removeGeos
+} from './redis-geo.lib'
 
 // Applies default values to `redis` config object
 const buildConfig = ({ getConfig, setConfig }) => {
