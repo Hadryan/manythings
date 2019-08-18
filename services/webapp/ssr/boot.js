@@ -11,11 +11,13 @@ process.env.NODE_ENV === 'development' && registerAction({
     handler: () => logBoot(),
 })
 
+import * as redis from './services/service-redis'
+
 export default createHookApp({
     services: [
         require('@forrestjs/service-env'),
         require('@forrestjs/service-logger'),
-        // require('./services/service-redis'),
+        require('./services/service-redis'),
         // require('./services/service-redis-geo'),
         // require('@forrestjs/service-jwt'),
         // require('@forrestjs/service-express'),
@@ -45,6 +47,7 @@ export default createHookApp({
         // require('./features/feature-pg-memcached'),
     ],
     settings: ({ setConfig, getEnv }) => {
+        console.log(redis)
         // setConfig('expressSSR', {
         //     // multilanguage cache policy
         //     shouldCache: (req) => (req.query.locale === undefined),

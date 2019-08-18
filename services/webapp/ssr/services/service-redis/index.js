@@ -1,6 +1,12 @@
-import * as hooks from './hooks'
 
 import redis from 'redis'
+import georedis from 'georedis'
+
+import * as hooks from './hooks'
+
+import * as geoService from './redis-geo.lib'
+
+// export { default as georedis } from './redis-geo.lib'
 
 // Applies default values to `redis` config object
 const buildConfig = ({ getConfig, setConfig }) => {
@@ -45,4 +51,49 @@ export default ({ registerHook, registerAction }) => {
                 })
         },
     })
+
+    registerAction({
+        ...defaults,
+        hook: '$REDIS_CONNECT',
+        handler: async (args, ctx) => {
+            const client = georedis.initialize(args.client)
+
+            await ctx.createHook.serie(hooks.REDIS_GEO_CONNECT, {
+                addGroup: (groupName) => {
+                    const groupClient = client.addSet(groupName)
+                    geoService.setGroup(groupName, groupClient)
+                },
+                deleteGroup: (groupName) => {
+                    client.deleteSet(groupName)
+                    geoService.setGroup(groupName, null)
+                },
+            })
+        },
+    })
+
+    // registerAction({
+    //     ...defaults,
+    //     hook: '$REDIS_GEO_CONNECT',
+    //     handler: async ({ addGroup }, ctx) => {
+    //         // await addGroup('cars')
+            
+    //         // const res = await geoService.update('cars', [
+    //         //     ['sho1', 10.10, 11.12],
+    //         //     ['sho2', 11.11, 12.12],
+    //         //     ['sho3', 12.12, 13.13],
+    //         //     ['sho4', 13.13, 14.14],
+    //         //     ['sho5', 13.13, 14.14],
+    //         // ])
+    //         // console.log(res)
+
+    //         // const res1 = await geoService.get('cars', ['sho1', 'sho2'])
+    //         // console.log(res1)
+
+    //         // const res2 = await geoService.remove('cars', ['sho1', 'sho2'])
+    //         // console.log(res2)
+
+    //         // const res3 = await geoService.getNearby('cars', [10.10, 11.11], 500000000)
+    //         // console.log(res3)
+    //     },
+    // })
 }
