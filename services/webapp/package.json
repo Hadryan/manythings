@@ -64,6 +64,7 @@
     "firebase-admin": "^8.3.0",
     "flat": "^4.1.0",
     "georedis": "^3.1.1",
+    "moment": "^2.24.0",
     "redis": "^2.8.0"
   },
   "devDependencies": {
