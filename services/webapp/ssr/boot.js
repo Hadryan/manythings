@@ -15,8 +15,7 @@ export default createHookApp({
     services: [
         require('@forrestjs/service-env'),
         require('@forrestjs/service-logger'),
-        require('./services/service-redis'),
-        // require('./services/service-redis-geo'),
+        // require('./services/service-redis'),
         // require('@forrestjs/service-jwt'),
         // require('@forrestjs/service-express'),
         // require('@forrestjs/service-express-cookies'),
@@ -52,7 +51,6 @@ export default createHookApp({
         // })
 
         // setConfig('fetchq', {
-        //     logLevel: getEnv('LOG_LEVEL'),
         //     connect: {
         //         host: getEnv('PG_HOST'),
         //         port: getEnv('PG_PORT'),
