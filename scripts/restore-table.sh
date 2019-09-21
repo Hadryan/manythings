@@ -4,17 +4,18 @@ SQL_USER=${PG_USERNAME:-"postgres"}
 SQL_DB=${PG_DATABASE:-"postgres"}
 
 TABLE="${2}"
-FILE_PATH="backup/$TABLE.sql"
+FILE_PATH="/backup/$TABLE.sql"
 
 echo ""
 echo "======== PG RESTORE ========"
-echo "host:      $PG_HOST"
-echo "user:      $PG_USERNAME"
-echo "database:  $PG_DATABASE"
+echo "host:      $SQL_HOST"
+echo "user:      $SQL_USER"
+echo "database:  $SQL_DB"
 echo "target:    $FILE_PATH"
 echo ""
 enterToContinue
 echo ""
 echo ""
 
-humble exec postgres pg_restore --user=$SQL_USER --table=$TABLE -C -d $SQL_DB $FILE_PATH
+# echo "humble exec $SQL_HOST pg_restore --user=$SQL_USER --table=$TABLE -C -d $SQL_DB $FILE_PATH"
+humble exec $SQL_HOST pg_restore --user=$SQL_USER --table=$TABLE -C -d $SQL_DB $FILE_PATH

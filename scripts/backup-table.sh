@@ -32,4 +32,5 @@ enterToContinue
 echo ""
 echo ""
 
-humble exec postgres pg_dump --user=$SQL_USER -Fc $SQL_DB --table=$TABLE --file=$FILE_PATH
+# echo "humble exec $SQL_HOST pg_dump --user=$SQL_USER -Fc $SQL_DB --table=$TABLE_NAME --file=$BACKUP_FILE_PATH"
+humble exec $SQL_HOST pg_dump --user=$SQL_USER -Fc $SQL_DB --table=$TABLE_NAME --file=$BACKUP_FILE_PATH
